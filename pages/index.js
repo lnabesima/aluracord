@@ -1,42 +1,9 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+import React from 'react';
+import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-function GlobalStyle() {
-  return (
-    <style global jsx>
-      {`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-          list-style: none;
-        }
 
-        body {
-          font-family: 'Open Sans', sans-serif;
-        }
-
-        /*Fit app height to display*/
-        html,
-        body,
-        #__next {
-          min-height: 100vh;
-          display: flex;
-          flex: 1;
-        }
-
-        #__next {
-          flex: 1;
-        }
-
-        #__next > * {
-          flex: 1;
-        }
-        /* ./Fit app height to display*/
-      `}
-    </style>
-  );
-}
 
 function Titulo(props) {
   const Tag = props.tag;
@@ -67,11 +34,13 @@ function Titulo(props) {
 // }
 
 export default function HomePage() {
-  const username = 'lnabesima';
+  // const username = 'lnabesima';
+  const [username, setUsername] = React.useState('lnabesima');
+  const roteamento = useRouter();
 
   return (
     <>
-      <GlobalStyle />
+
       <Box
         styleSheet={{
           display: 'flex',
@@ -106,6 +75,10 @@ export default function HomePage() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (event) {
+              event.preventDefault();
+              roteamento.push('/chat');
+            }}
             styleSheet={{
               display: 'flex',
               flexDirection: 'column',
@@ -126,8 +99,16 @@ export default function HomePage() {
             >
               {appConfig.name}
             </Text>
-
+            {/* <input
+              type="text"
+              value={username}
+              onChange={function (event) {
+                const valor = event.target.value;
+                setUsername(valor);
+              }}
+            /> */}
             <TextField
+              value={username}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -137,7 +118,12 @@ export default function HomePage() {
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
+              onChange={function (event) {
+                const valor = event.target.value;
+                setUsername(valor);
+              }}
             />
+
             <Button
               type="submit"
               label="Entrar"
