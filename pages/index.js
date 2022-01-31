@@ -3,8 +3,6 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
-
-
 function Titulo(props) {
   const Tag = props.tag;
   return (
@@ -40,7 +38,6 @@ export default function HomePage() {
 
   return (
     <>
-
       <Box
         styleSheet={{
           display: 'flex',
@@ -77,7 +74,7 @@ export default function HomePage() {
             as="form"
             onSubmit={function (event) {
               event.preventDefault();
-              roteamento.push('/chat');
+              roteamento.push(`/chat?username=${username}`);
             }}
             styleSheet={{
               display: 'flex',
